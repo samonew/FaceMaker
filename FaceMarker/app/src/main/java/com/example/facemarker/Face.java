@@ -2,8 +2,14 @@
  * @author Samone Watkins
  * @Date March 2, 2021
  *
+ *class is successfully implemented with no known bugs or deficiencies
  *
- *
+ * ------------EXTERNAL CITATION-------------------
+ * Date: March 2, 2021
+ * Problem: Confusion about how to correctly use one int as a color
+ * Solution: use the color class to convert rgb values to one int
+ * Source: Dr. Tribelhorn's office hours & the link he sent me:
+ *         https://developer.android.com/reference/android/graphics/Color#blue(int)
  *
  * */
 
@@ -25,6 +31,11 @@ public class Face {
         randomize();
     }
 
+    /**
+     * Randomly draws a face with randomly generated colors and randomly picking the hair style.
+     *
+     * Takes no parameters and returns nothing
+     */
     public void randomize() {
 
         //setting all of the colors to random values
@@ -48,6 +59,12 @@ public class Face {
 
     }
 
+    /**
+     * The method that draws all of the facial features.
+     * Works by getting the center of the canvas and then calculating face, eyes, and hair.
+     *
+     * @param canvas
+     */
     public void onDraw(Canvas canvas){
         canvas.drawColor(Color.WHITE);
 
@@ -56,7 +73,7 @@ public class Face {
 
         Paint p = new Paint();
 
-        //draw the back hair if the style is bangs
+        //draw the back hair if the style wants it
         if(hairStyle == 1) {
             p.setColor(hairColor);
             canvas.drawOval(cx - 275, cy - 275, cx + 275, cy + 300, p);
@@ -65,11 +82,12 @@ public class Face {
             p.setColor(hairColor);
             canvas.drawCircle(cx, cy - 100, 300, p);
         }
+
         //draw skin
         p.setColor(skinColor);
         canvas.drawCircle(cx, cy, 200, p);
 
-        //draw eyes
+        //draw eyes (Whites, then irises, then pupils)
         p.setColor(Color.WHITE);
         canvas.drawCircle(cx + 75, cy -25, 50, p);
         canvas.drawCircle(cx - 75, cy - 25, 50, p);
@@ -82,11 +100,11 @@ public class Face {
 
         //draw a smile
         p.setColor(Color.BLACK);
-        canvas.drawArc( cx - 150, cy + 150, cx + 150, cy + 75, 0, 190, false, p );
+        canvas.drawArc( cx - 150, cy + 150, cx + 150, cy + 75, 0,
+                190, false, p );
 
-        //draw hair
+        //draw front hair
         p.setColor(hairColor);
-
         if(hairStyle == 0){ //then it's an afro
             canvas.drawOval(cx - 150, cy - 200, cx + 150, cy - 100, p);
         }
@@ -94,14 +112,15 @@ public class Face {
             canvas.drawRect(cx - 150, cy - 200, cx + 150, cy - 100, p);
         }
         if(hairStyle == 2){ // then it's a ponytail
-            canvas.drawArc(cx - 350, cy - 300, cx - 200, cy + 200, 180, 360, true, p);
+            canvas.drawArc(cx - 350, cy - 300, cx - 200, cy + 200,
+                    180, 360, true, p);
 
         }
 
 
     }
 
-    //getters and setters
+    //getters and setters for each instance variable
     public int getEyeColor() { return eyeColor; }
 
     public int getHairStyle() { return hairStyle; }

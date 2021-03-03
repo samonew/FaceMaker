@@ -4,11 +4,11 @@
  *
  * Class is successfully implemented with no known bugs
  *
- * EXTERNAL CITATION
+ * ------------------EXTERNAL CITATION-------------------------
  * Date: February 27, 2021
  * Problem: I was unsure how to correctly implement a Spinner and set it's onClickListener
  * Solution: Find
- * source: https://developer.android.com/guide/topics/ui/controls/spinner#java
+ * Source: https://developer.android.com/guide/topics/ui/controls/spinner#java
  *
  *
  * */

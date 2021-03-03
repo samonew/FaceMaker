@@ -3,7 +3,31 @@
  * @Date March 2, 2021
  *
  *
+ * Class is successfully implemented with no known bugs or deficiencies
  *
+ * ----------EXTERNAL CITATION-------------------------
+ * Date: February 28, 2021
+ * Problem: I wasn't sure how to correctly implement listeners. Each listener I had to google.
+ * Solution: Go to the Android Developer site and look at each feature's listener needs
+ * Sources: https://developer.android.com/guide/topics/ui/controls/spinner#java
+ *          https://developer.android.com/reference/android/widget/TextView
+ *          https://developer.android.com/reference/android/widget/SeekBar#public-methods
+ *          https://developer.android.com/guide/topics/ui/controls/radiobutton
+ *          https://developer.android.com/reference/android/widget/Button
+ *          https://developer.android.com/reference/android/view/View
+ *
+ *
+ *----------EXTERNAL CITATION--------------------------
+ * Date: February 27 - March 1, 2021
+ * Problem: I had issues knowing what feature goes where
+ * Solution: Rewatching Tribelhorn's videos to code alongside with and adapt those skills.
+ * Sources: All of Dr. Tribelhorn's videos on Moodle. I've rewatched each one
+ *
+ * --------EXTERNAL CITATION--------------------------
+ * Date: March 2, 2021
+ * Problem: The spinner wasn't changing according to the tab clicked
+ * Solution: Use view.getViewById() to get the button that was clicked
+ * Source: Dr. Tribelhorn's office hours & Android SDK for view
  *
  * */
 package com.example.facemarker;
@@ -22,11 +46,11 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 
 public class FaceSurfaceView extends SurfaceView implements View.OnClickListener,
-        SeekBar.OnSeekBarChangeListener, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener{
+        SeekBar.OnSeekBarChangeListener, AdapterView.OnItemSelectedListener{
 
+    //instance variables for the class
     private Face face;
     private int buttonClicked;
-
 
     public FaceSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -35,32 +59,24 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
         face = new Face();
     }
 
+    /**
+     * Draws the face by calling the Face's onDraw method
+     *
+     * @param canvas
+     */
     protected void onDraw(Canvas canvas){
-        //This is where we draw the face
         face.onDraw(canvas);
     }
 
+    /**
+     * This method saves the id so that the program knows what feature's colors should change. If
+     * the button is the randomize button then call Face's randomize(). Then invalidate so it will
+     * redraw.
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
-
-        //save all of the old values
-        SeekBar red = view.findViewById(R.id.redSeekBar);
-        SeekBar green = view.findViewById(R.id.greenSeekBar);
-        SeekBar blue = view.findViewById(R.id.blueSeekBar);
-        int greenProg = green.getProgress();
-        int blueProg = blue.getProgress();
-        int redProg = red.getProgress();
-
-        //change the button click
-        if(buttonClicked == R.id.eyeRadioButton){
-            face.setEyeColor(Color.rgb(redProg, blueProg, greenProg));
-        }
-        else if(buttonClicked == R.id.hairRadioButton){
-            face.setHairColor(Color.rgb(redProg, greenProg, blueProg));
-        }
-        else if(buttonClicked == R.id.skinRadioButton){
-            face.setSkinColor(Color.rgb(redProg, greenProg, blueProg));
-        }
 
         //tells the program which button is clicked and what color to change
         buttonClicked = view.getId();
@@ -74,6 +90,14 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
         invalidate();
     }
 
+    /**
+     * This saves the color values of the seekbar that was changed and changes the color of the
+     * feature that is selected as it is scrubbed.
+     *
+     * @param seekBar
+     * @param i
+     * @param fromUser
+     */
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean fromUser) {
 
@@ -121,6 +145,10 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
             invalidate();
         }
 
+        else{
+
+        }
+
     }
 
     //do nothing for the next two
@@ -129,6 +157,15 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) { }
 
+    /**
+     * This determines which tab on the spinner was selected and sets that as the face's new hair
+     * style.
+     *
+     * @param adapterView
+     * @param view
+     * @param i
+     * @param l
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -137,7 +174,7 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
             face.setHairStyle(0);
         }
 
-        else if (adapterView.getItemAtPosition(i).toString().equalsIgnoreCase("Bangs")){
+        else if(adapterView.getItemAtPosition(i).toString().equalsIgnoreCase("Bangs")){
             //then hair style is bangs
             face.setHairStyle(1);
         }
@@ -154,22 +191,4 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) { }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if(adapterView.getAdapter() == adapterView.getAdapter().getItem(0)){
-            //then hair style is Afro
-            face.setHairStyle(0);
-        }
-
-        else if (adapterView.getAdapter() == adapterView.getAdapter().getItem(1)){
-            //then hair style is bangs
-            face.setHairStyle(1);
-        }
-
-        else if(adapterView.getAdapter() == adapterView.getAdapter().getItem(2)){
-            //then hair style is ponytails
-            face.setHairStyle(2);
-        }
-        invalidate();
-    }
 }
