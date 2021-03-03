@@ -29,6 +29,12 @@
  * Solution: Use view.getViewById() to get the button that was clicked
  * Source: Dr. Tribelhorn's office hours & Android SDK for view
  *
+ *--------EXTERNAL CITATION---------------------------
+ * Date: March 3, 2021
+ * Problem: My seekBar's weren't changing with the color levels.
+ * Solution: Instead of view.findViewById to instantiate the seekBars in onClick().
+ *           I must use (MainActivity)getContext()
+ * Source: Anabel Hilerio helped me realize
  * */
 package com.example.facemarker;
 
@@ -78,14 +84,36 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
     @Override
     public void onClick(View view) {
 
+
         //tells the program which button is clicked and what color to change
         buttonClicked = view.getId();
 
-        if(view.getId() == R.id.randomFaceButton){
+        if(buttonClicked == R.id.randomFaceButton){
             face.randomize();
         }
 
-        //set the progress for each progress bar based off of the button clicked
+        else{
+            SeekBar red = ((MainActivity)getContext()).findViewById(R.id.redSeekBar);
+            SeekBar green = ((MainActivity)getContext()).findViewById(R.id.greenSeekBar);
+            SeekBar blue = ((MainActivity)getContext()).findViewById(R.id.blueSeekBar);
+
+            if(buttonClicked == R.id.skinRadioButton){
+                onProgressChanged(red, Color.red(face.getSkinColor()), false);
+                onProgressChanged(green, Color.green(face.getSkinColor()), false);
+                onProgressChanged(blue, Color.blue(face.getSkinColor()), false);
+            }
+            else if(buttonClicked == R.id.hairRadioButton){
+                onProgressChanged(red, Color.red(face.getHairColor()), false);
+                onProgressChanged(green, Color.green(face.getHairColor()), false);
+                onProgressChanged(blue, Color.blue(face.getHairColor()), false);
+            }
+            else if(buttonClicked == R.id.eyeRadioButton){
+                onProgressChanged(red, Color.red(face.getEyeColor()), false);
+                onProgressChanged(green, Color.green(face.getEyeColor()), false);
+                onProgressChanged(blue, Color.blue(face.getEyeColor()), false);
+            }
+        }
+
 
         invalidate();
     }
@@ -146,7 +174,8 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
         }
 
         else{
-
+            seekBar.setProgress(i);
+            invalidate();
         }
 
     }
@@ -179,8 +208,8 @@ public class FaceSurfaceView extends SurfaceView implements View.OnClickListener
             face.setHairStyle(1);
         }
 
-        else if(adapterView.getItemAtPosition(i).toString().equalsIgnoreCase("ponytail")){
-            //then hair style is ponytails
+        else if(adapterView.getItemAtPosition(i).toString().equalsIgnoreCase("buns")){
+            //then hair style is buns
             face.setHairStyle(2);
         }
 

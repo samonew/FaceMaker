@@ -54,7 +54,7 @@ public class Face {
         green = (int)(255 * Math.random());
         hairColor = Color.rgb(red, green, blue);
 
-        int style = (int)(2 * Math.random());
+        int style = (int)(3 * Math.random());
         hairStyle = style;
 
     }
@@ -81,6 +81,10 @@ public class Face {
         if(hairStyle == 0){
             p.setColor(hairColor);
             canvas.drawCircle(cx, cy - 100, 300, p);
+        }
+        if(hairStyle == 2){
+            p.setColor(hairColor);
+            canvas.drawCircle(cx, cy, 250, p);
         }
 
         //draw skin
@@ -111,9 +115,9 @@ public class Face {
         if(hairStyle == 1){ // then it's bangs
             canvas.drawRect(cx - 150, cy - 200, cx + 150, cy - 100, p);
         }
-        if(hairStyle == 2){ // then it's a ponytail
-            canvas.drawArc(cx - 350, cy - 300, cx - 200, cy + 200,
-                    180, 360, true, p);
+        if(hairStyle == 2){ // then it's buns
+            canvas.drawCircle(cx + 160, cy - 250, 100, p);
+            canvas.drawCircle(cx - 160, cy - 250, 100, p);
 
         }
 
